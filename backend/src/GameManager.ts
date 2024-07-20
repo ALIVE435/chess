@@ -13,9 +13,9 @@ export class GameManager {
         this.users = []
     }
     addUser(socket:WebSocket){    //anytime a new user joins in, add it into users
+        //console.log(socket)
         this.users.push(socket);
         this.addHandler(socket)
-
     }
     removeUser(socket:WebSocket){
         this.users = this.users.filter(user => user != socket)
@@ -24,7 +24,7 @@ export class GameManager {
     private addHandler(socket:WebSocket){
         socket.on("message",(data)=>{
             const message = JSON.parse(data.toString());
-            if(message.type == INIT_GAME) {
+            if(message.type === INIT_GAME) {
                 if(this.pendingUser){
                     //start a game
                     const game = new Game(this.pendingUser, socket);
@@ -32,6 +32,7 @@ export class GameManager {
                     this.pendingUser = null;
                 }
                 else{
+                    socket.send("no user found, please wait")
                     this.pendingUser = socket; //await him
                 }
             }
