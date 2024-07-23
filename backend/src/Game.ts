@@ -35,10 +35,10 @@ export class Game {
     
     makeMove(socket:WebSocket, move:{from:string, to:string}) {
         console.log(this.board.move.length)
-        if(this.board.moves.length%2 === 0 && socket != this.player1) return; //0 is player1 and 1 is player2
-        if(this.board.moves.length%2 === 1 && socket != this.player2) return;
+        if(this.board.moves().length%2 === 0 && socket != this.player1) return; //length == 0 is player1 and 1 is player2
+        if(this.board.moves().length%2 === 1 && socket != this.player2) return;
         
-        //validate the type of move
+        //validate the type of move ie make the move if it is correct move
         try{
             this.board.move(move)
         }catch(e){
@@ -60,13 +60,13 @@ export class Game {
             }))
             return
         }
-        if(this.board.moves.length % 2 === 0){
-            this.player1.emit(JSON.stringify({
+        if(this.board.moves().length % 2 === 0){  //if it was player1 turn, let his move known to player2 and vice-versa
+            this.player2.emit(JSON.stringify({
                 type:MOVE,
                 payload:move
             }))
         }else{
-            this.player2.emit(JSON.stringify({
+            this.player1.emit(JSON.stringify({
                 type: MOVE,
                 payload: move
             }))
