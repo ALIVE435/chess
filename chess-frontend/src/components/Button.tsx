@@ -7,8 +7,8 @@ interface propsType {
 export const Button = ({onClick, children}:propsType)=>{
 
     return(
-        <div>
-            <button className="p-3" onClick={onClick}>{children}</button>
+        <div className=" text-center">
+            <button className="p-3 bg-green-800 rounded-xl text-lg font-medium hover:bg-green-950 hover:text-white" onClick={onClick}>{children}</button>
         </div>
     )
 }

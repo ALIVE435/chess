@@ -13,7 +13,8 @@ export default function Game(){
     const socket = useSocket();
     const [chess, setChess] = useState(new Chess())
     const [board, setBoard] = useState(chess.board()) //chess.board() return instantaneus chess board of current chess intance in the form of 2D array of objects
-
+    // console.log(chess.ascii());
+    // console.log(board)
     useEffect(()=>{
         if(!socket) return;
 
@@ -45,18 +46,18 @@ export default function Game(){
 
     if(!socket) return <div>Connecting...</div>
     return(
-        <div className="flex justify-center">
+        <div className="flex justify-center bg-slate-900">
             <div className="pt-8 max-w-screen-lg">
                 <div className="grid grid-cols-6 gap-4">
-                    <div className="col-span-4">
+                    <div className="col-span-4 min-h-screen border-2 border-red-600">
                         <ChessBoard board={board}/>
                     </div>
-                    <div className="col-span-2">
+                    <div className="col-span-2 border-2 border-green-50 bg-green-300">
                         <Button onClick={()=>{
                             socket.send(JSON.stringify({
                                 type:INIT_GAME
                             }))
-                        }}>Play</Button>
+                        }}>PLAY</Button>
                     </div>
                 </div>
             </div>
