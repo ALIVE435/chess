@@ -11,20 +11,19 @@ export const GAME_OVER = "game_over"
 
 export default function Game(){
     const socket = useSocket();
-    const [chess, setChess] = useState(new Chess())
+    const [chess, setChess] = useState<Chess>(new Chess())
     const [board, setBoard] = useState(chess.board()) //chess.board() return instantaneus chess board of current chess intance in the form of 2D array of objects
     // console.log(chess.ascii());
-    // console.log(board)
     useEffect(()=>{
         if(!socket) return;
 
         socket.onmessage = (event)=>{
             const message = JSON.parse(event.data)
-            console.log(message)
+            console.log("new message")
 
             switch (message.type){
                 case INIT_GAME:
-                    setChess(new Chess())
+                    //setChess(new Chess())
                     setBoard(chess.board())
                     console.log("Game initialised")
                     break;
@@ -40,7 +39,7 @@ export default function Game(){
                     break;
             }
         }
-    },[])
+    },[socket])
 
 
 
@@ -50,7 +49,7 @@ export default function Game(){
             <div className="pt-8 max-w-screen-lg">
                 <div className="grid grid-cols-6 gap-4">
                     <div className="col-span-4 min-h-screen border-2 border-red-600">
-                        <ChessBoard board={board}/>
+                        <ChessBoard chess={chess} board={board} socket = {socket} setBoard={setBoard}/>
                     </div>
                     <div className="col-span-2 border-2 border-green-50 bg-green-300">
                         <Button onClick={()=>{
