@@ -13,8 +13,8 @@ export default function Game(){
     const socket = useSocket();
     const [chess, setChess] = useState<Chess>(new Chess())
     const [board, setBoard] = useState(chess.board()) //chess.board() return instantaneus chess board of current chess intance in the form of 2D array of objects
-    // console.log(chess.ascii());
     useEffect(()=>{
+        console.log(socket)
         if(!socket) return;
 
         socket.onmessage = (event)=>{

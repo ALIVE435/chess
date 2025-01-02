@@ -16,7 +16,7 @@ export class Game {
     private moves : moveType[];
     private startTime : Date;
 
-    constructor(player1:WebSocket, player2:WebSocket){
+    constructor(player1:WebSocket, player2:WebSocket, token1: string | null, token2: string | null){  
         this.player1 = player1;
         this.player2 = player2;
         this.board = new Chess();
